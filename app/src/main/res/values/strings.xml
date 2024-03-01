@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ADFMP Ecology</string>
+    <string name="map">Карта</string>
+    <string name="maps_list">Карты</string>
+    <string name="objects_list">Объекты</string>
+    <string name="users_list">Люди</string>
+    <string name="profile">Профиль</string>
+
+    <string name="add_object">Добавить объект</string>
+    <string name="settings">Настройки</string>
+    <string name="title">Ecology</string>
+</resources>
