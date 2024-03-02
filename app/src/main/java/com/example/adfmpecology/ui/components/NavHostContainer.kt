@@ -29,11 +29,11 @@ fun NavHostContainer(
             }
 
             composable(DataSource.UserNavItems[1].route) {
-                MapsListScreen()
+                MapsListScreen(navController)
             }
 
             composable(DataSource.UserNavItems[2].route) {
-                ObjectsListScreen()
+                ObjectsListScreen(navController)
             }
 
             composable(DataSource.UserNavItems[3].route) {
@@ -42,7 +42,7 @@ fun NavHostContainer(
 
             // Еще 1 путь особый у админа.
             composable(DataSource.AdminNavItems[3].route) {
-                UsersListScreen()
+                UsersListScreen(navController)
             }
         }
     )
