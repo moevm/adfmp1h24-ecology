@@ -1,4 +1,4 @@
-package com.example.adfmpecology.ui.components
+package com.example.adfmpecology.ui.components.user
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
