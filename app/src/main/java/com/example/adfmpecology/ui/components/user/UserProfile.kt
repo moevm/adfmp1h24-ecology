@@ -19,26 +19,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.adfmpecology.data.types.UserData
+import com.example.adfmpecology.data.types.UserProfileData
 
-data class UserProfileData(var login: String, var password: String, var name: String)
-data class UserData(
-    val login: String, val password: String, val name: String, val role: String, val karma: Int
-)
 
 @Composable
 fun UserProfile(
-    data: UserData,
+    userData: UserData,
     modifier: Modifier = Modifier,
     onChanged: (data: UserProfileData) -> Unit = {},
 ) {
-    var profileData by remember {
-        mutableStateOf(UserProfileData(data.login, data.password, data.name))
+    val profileData by remember {
+        mutableStateOf(UserProfileData(userData.login, userData.password, userData.name))
     }
 
     Card(modifier) {
@@ -54,12 +51,12 @@ fun UserProfile(
                 tint = MaterialTheme.colorScheme.primary
             )
             Column(verticalArrangement = Arrangement.Center) {
-                AssistChip(onClick = { /*TODO*/ }, label = { Text(data.role) })
+                AssistChip(onClick = { /*TODO*/ }, label = { Text(userData.role) })
                 Row {
                     Text("Карма", modifier = Modifier.align(Alignment.CenterVertically))
                     AssistChip(
                         onClick = { /*TODO*/ },
-                        label = { Text(data.karma.toString()) },
+                        label = { Text(userData.karma.toString()) },
                         Modifier.padding(start = 5.dp)
                     )
                 }
@@ -98,7 +95,7 @@ fun UserProfile(
 
             Button(modifier = Modifier
                 .align(Alignment.End)
-                .padding(top = 10.dp), onClick = { }) {
+                .padding(top = 10.dp), onClick = { onChanged(profileData) }) {
                 Text(text = "Сохранить")
             }
 
@@ -110,6 +107,6 @@ fun UserProfile(
 @Composable
 fun UserProfilePreview() {
     UserProfile(
-        data = UserData("login", "password", "Dmitriy", "user", 100)
+        userData = UserData("login", "password", "Dmitriy", "user", 100)
     )
 }
