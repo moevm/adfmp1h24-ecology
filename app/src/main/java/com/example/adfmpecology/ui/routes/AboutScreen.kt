@@ -72,7 +72,20 @@ fun AboutScreen(
                 fontSize = 18.sp
             )
         )
-        
+        Spacer(modifier = Modifier.height(15.dp))
+        Text(
+            text = "Авторы: Болкунов Владислав, Давыдов Михаил, Парамонов Вячеслав.",
+            style = TextStyle(
+                fontSize = 18.sp
+            )
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = "Под руководстом: \"ЛЭТИ МОЭВМ\" Заславский Марк.",
+            style = TextStyle(
+                fontSize = 18.sp
+            )
+        )
     }
 }
 
