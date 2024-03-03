@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -19,8 +20,8 @@ import com.example.adfmpecology.data.types.AuthData
 
 @Composable
 fun AuthCard(onInput: (data: AuthData) -> Unit = {}) {
-    val authData by remember {
-        mutableStateOf(AuthData("",""))
+    var authData by remember {
+        mutableStateOf(AuthData("", ""))
     }
 
 
@@ -29,13 +30,13 @@ fun AuthCard(onInput: (data: AuthData) -> Unit = {}) {
             Text(text = "Авторизация", modifier = Modifier.padding(5.dp))
             TextField(
                 value = authData.login,
-                onValueChange = { authData.login = it },
+                onValueChange = { authData = authData.copy(login = it) },
                 label = { Text("Логин") },
                 singleLine = true,
             )
             TextField(
                 value = authData.password,
-                onValueChange = { authData.password = it },
+                onValueChange = { authData = authData.copy(password = it) },
                 label = { Text("Пароль") },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation()
