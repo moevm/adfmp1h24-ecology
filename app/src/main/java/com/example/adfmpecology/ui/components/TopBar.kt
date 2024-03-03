@@ -38,7 +38,7 @@ fun TopBar(navController: NavHostController, modifier: Modifier = Modifier) {
                 colors = IconButtonDefaults.filledIconButtonColors(
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
-                onClick = { navController.navigate(DataSource.TopNavItems[0].route) }
+                onClick = { navController.navigate(DataSource.TopNavItems[2].route) }
             ) {
                 Icon(
                     imageVector = Icons.Filled.GpsFixed,
@@ -58,7 +58,7 @@ fun TopBar(navController: NavHostController, modifier: Modifier = Modifier) {
                 colors = IconButtonDefaults.filledIconButtonColors(
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
-                onClick = { navController.navigate(DataSource.TopNavItems[2].route) }
+                onClick = { /* Do something ... maybe */}
             ) {
                 Icon(
                     imageVector = Icons.Filled.MoreVert,
