@@ -25,7 +25,11 @@ fun ShareScreen(
             .padding(15.dp, 5.dp)
             .fillMaxWidth()
     ) {
-        
+        Image(
+            painter = painterResource(id = R.drawable.polygon1),
+            contentDescription = null,
+            modifier = Modifier.size(400.dp)
+        )
 
         Button(modifier = Modifier
             .align(Alignment.End)
