@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.adfmpecology.R
-import com.example.adfmpecology.data.DataSource
 import com.example.adfmpecology.ui.components.Table
 import com.seanproctor.datatable.DataColumn
 
