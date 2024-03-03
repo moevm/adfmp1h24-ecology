@@ -10,22 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-data class AuthData(val login: String, val password: String)
+import com.example.adfmpecology.data.types.AuthData
 
 @Composable
 fun AuthCard(onInput: (data: AuthData) -> Unit = {}) {
-    var login by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
+    val authData by remember {
+        mutableStateOf(AuthData("",""))
     }
 
 
@@ -33,14 +28,14 @@ fun AuthCard(onInput: (data: AuthData) -> Unit = {}) {
         Column(modifier = Modifier.padding(15.dp)) {
             Text(text = "Авторизация", modifier = Modifier.padding(5.dp))
             TextField(
-                value = login,
-                onValueChange = { login = it },
+                value = authData.login,
+                onValueChange = { authData.login = it },
                 label = { Text("Логин") },
                 singleLine = true,
             )
             TextField(
-                value = password,
-                onValueChange = { password = it },
+                value = authData.password,
+                onValueChange = { authData.password = it },
                 label = { Text("Пароль") },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation()
@@ -50,7 +45,7 @@ fun AuthCard(onInput: (data: AuthData) -> Unit = {}) {
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(top = 10.dp),
-                onClick = { onInput(AuthData(login, password)) }) {
+                onClick = { onInput(authData) }) {
                 Text(text = "Войти")
             }
 
