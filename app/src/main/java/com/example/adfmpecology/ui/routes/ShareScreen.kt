@@ -20,5 +20,17 @@ fun ShareScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    
+    Column(
+        modifier = Modifier
+            .padding(15.dp, 5.dp)
+            .fillMaxWidth()
+    ) {
+        
+
+        Button(modifier = Modifier
+            .align(Alignment.End)
+            .padding(top = 10.dp), onClick = { /* Do something or nothing */ }) {
+            Text(text = "Поделиться")
+        }
+    }
 }
