@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.adfmpecology.data.types.UserData
 import com.example.adfmpecology.ui.components.user.AuthCard
-import com.example.adfmpecology.ui.components.user.UserData
 import com.example.adfmpecology.ui.components.user.UserProfile
 
 @Composable
