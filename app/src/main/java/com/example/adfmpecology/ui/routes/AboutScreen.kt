@@ -19,6 +19,60 @@ fun AboutScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(21.dp)
+    ) {
+        Text(
+            text = "Справка",
+            style = TextStyle(
+                fontSize = 24.sp
+            )
+        )
+        Spacer(modifier = Modifier.height(9.dp))
+        Text(
+            text = "Вкладка \"Карта\": на ней можно посмотреть карту и наложенные объекты.",
+            style = TextStyle(
+                fontSize = 18.sp
+            )
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = "Вкладка \"Карты\": на ней можно посмотреть загруженные карты.",
+            style = TextStyle(
+                fontSize = 18.sp
+            )
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = "Вкладка \"Объекты\": на ней можно посмотреть загруженные объекты или объедки - кому как нравится.",
+            style = TextStyle(
+                fontSize = 18.sp
+            )
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = "Вкладка \"Профиль\": на ней можно посмотреть свой профиль и уровень кармы.",
+            style = TextStyle(
+                fontSize = 18.sp
+            )
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = "В верхнем левом углу есть значок компаса - с его помощью Вы можете добавить новый объект.",
+            style = TextStyle(
+                fontSize = 18.sp
+            )
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = "В верхнем правом углу на данный момент есть кнопка с помощью которой можно поделиться последним созданным объектом",
+            style = TextStyle(
+                fontSize = 18.sp
+            )
+        )
+        
+    }
 }
 
