@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -34,7 +35,7 @@ fun UserProfile(
     modifier: Modifier = Modifier,
     onChanged: (data: UserProfileData) -> Unit = {},
 ) {
-    val profileData by remember {
+    var profileData by remember {
         mutableStateOf(UserProfileData(userData.login, userData.password, userData.name))
     }
 
@@ -70,7 +71,7 @@ fun UserProfile(
 
             TextField(
                 value = profileData.login,
-                onValueChange = { profileData.login = it },
+                onValueChange = { profileData = profileData.copy(login = it) },
                 label = { Text("Логин") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -78,7 +79,7 @@ fun UserProfile(
 
             TextField(
                 value = profileData.password,
-                onValueChange = { profileData.password = it },
+                onValueChange = { profileData = profileData.copy(password = it) },
                 label = { Text("Пароль") },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
@@ -87,7 +88,7 @@ fun UserProfile(
 
             TextField(
                 value = profileData.name,
-                onValueChange = { profileData.name = it },
+                onValueChange = { profileData = profileData.copy(name = it) },
                 label = { Text("Имя") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
