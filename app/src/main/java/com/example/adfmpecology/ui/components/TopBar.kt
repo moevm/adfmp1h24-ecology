@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.adfmpecology.R
@@ -50,7 +51,8 @@ fun TopBar(navController: NavHostController, modifier: Modifier = Modifier) {
             TextButton(
                 onClick = { navController.navigate(DataSource.TopNavItems[1].route) }
             ) {
-                Text(stringResource(R.string.title,), color = MaterialTheme.colorScheme.onPrimary)
+                Text(stringResource(R.string.title,),
+                color = MaterialTheme.colorScheme.onPrimary, fontSize = 25.sp)
             }
         },
         actions = {
