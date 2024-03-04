@@ -3,12 +3,14 @@ package com.example.adfmpecology.data
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Satellite
 import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.GpsFixed
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Terrain
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
 import com.example.adfmpecology.R
 import com.example.adfmpecology.data.types.NavItem
-
+import com.example.adfmpecology.data.types.TopNavItem
 
 object DataSource {
     val UserNavItems = listOf(
@@ -61,4 +63,20 @@ object DataSource {
             route = "profile"
         )
     )
+
+    val TopNavItems = listOf(
+        TopNavItem(
+            label = R.string.add_object,
+            route = "add_object"
+        ),
+        TopNavItem(
+            label = R.string.title,
+            route = "title"
+        ),
+        TopNavItem(
+            label = R.string.settings,
+            route = "settings"
+        )
+    )
+
 }

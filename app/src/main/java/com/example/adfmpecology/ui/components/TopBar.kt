@@ -9,12 +9,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.adfmpecology.R
@@ -37,7 +39,7 @@ fun TopBar(navController: NavHostController, modifier: Modifier = Modifier) {
                 colors = IconButtonDefaults.filledIconButtonColors(
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
-                onClick = { navController.navigate(DataSource.UserNavItems[0].route) }
+                onClick = { navController.navigate(DataSource.TopNavItems[2].route) }
             ) {
                 Icon(
                     imageVector = Icons.Filled.GpsFixed,
@@ -46,14 +48,19 @@ fun TopBar(navController: NavHostController, modifier: Modifier = Modifier) {
             }
         },
         title = {
-            Text(stringResource(R.string.title))
+            TextButton(
+                onClick = { navController.navigate(DataSource.TopNavItems[1].route) }
+            ) {
+                Text(stringResource(R.string.title,),
+                color = MaterialTheme.colorScheme.onPrimary, fontSize = 25.sp)
+            }
         },
         actions = {
             IconButton(
                 colors = IconButtonDefaults.filledIconButtonColors(
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
-                onClick = { /* do something */ }
+                onClick = { /* Do something ... maybe */}
             ) {
                 Icon(
                     imageVector = Icons.Filled.MoreVert,

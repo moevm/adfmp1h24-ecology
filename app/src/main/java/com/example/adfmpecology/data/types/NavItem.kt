@@ -9,3 +9,9 @@ data class NavItem(
     val icon: ImageVector,
     val route: String
 )
+
+data class TopNavItem(
+    val label: Int,
+    val route: String
+)
+
