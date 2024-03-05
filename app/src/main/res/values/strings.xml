@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ADFMP Ecology</string>
+    <string name="app_name">MOEVM Ecology</string>
     <string name="map">Карта</string>
     <string name="maps_list">Карты</string>
     <string name="objects_list">Объекты</string>

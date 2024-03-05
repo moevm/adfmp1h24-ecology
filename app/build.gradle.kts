@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.adfmpecology"
+    namespace = "xyz.moevm.ecology"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.adfmpecology"
+        applicationId = "xyz.moevm.ecology"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
