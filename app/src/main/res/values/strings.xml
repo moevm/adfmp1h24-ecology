@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ADFMP Ecology</string>
+    <string name="app_name">MOEVM Ecology</string>
     <string name="map">Карта</string>
     <string name="maps_list">Карты</string>
     <string name="objects_list">Объекты</string>
@@ -10,6 +10,7 @@
     <string name="settings">Настройки</string>
     <string name="title">Ecology</string>
     <string name="filter">Отфильтровать таблицу</string>
+    <string name="menu_about">О приложении</string>
 
     <string name="table_maps">Загруженные карты</string>
     <string name="table_maps_col_1">Имя</string>
