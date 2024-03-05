@@ -6,10 +6,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import com.seanproctor.datatable.DataColumn
 import xyz.moevm.ecology.R
 import xyz.moevm.ecology.data.DataSource
 import xyz.moevm.ecology.ui.components.Table
-import com.seanproctor.datatable.DataColumn
 
 
 @Composable

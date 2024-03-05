@@ -1,11 +1,11 @@
 package xyz.moevm.ecology.data
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Satellite
 import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.Terrain
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Satellite
+import androidx.compose.material.icons.filled.Terrain
 import xyz.moevm.ecology.R
 import xyz.moevm.ecology.data.types.NavItem
 import xyz.moevm.ecology.data.types.TopNavItem
