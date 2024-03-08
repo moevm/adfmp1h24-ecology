@@ -1,4 +1,4 @@
-package xyz.moevm.ecology.api
+package xyz.moevm.ecology.api.types
 
 import com.google.gson.annotations.SerializedName
 

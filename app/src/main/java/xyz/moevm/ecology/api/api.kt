@@ -3,6 +3,7 @@ package xyz.moevm.ecology.api
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import xyz.moevm.ecology.api.services.EcologyAuthApiService
 
 
 const val SERVER_URL = "https://vladdoth.xyz/ecology/api/"
