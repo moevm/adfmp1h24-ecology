@@ -24,9 +24,7 @@ class MainActivity : ComponentActivity() {
             ViewModelProvider(this)[UserDataViewModel::class.java]
 
         lifecycleScope.launch {
-            launch {
-                userDataViewModel.fetchUser()
-            }
+            userDataViewModel.fetchUser()
         }
 
         setContent {
