@@ -2,7 +2,6 @@ package xyz.moevm.ecology.data.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,10 +14,9 @@ import xyz.moevm.ecology.api.types.ServerUserData
 
 class UserDataViewModel(application: Application) : AndroidViewModel(application) {
     private val api = ApiViewModel(application)
+
     private val _state = MutableStateFlow<ServerUserData?>(null)
     val state: StateFlow<ServerUserData?> = _state.asStateFlow()
-
-    val authed get() = state.value !== null
 
     private fun setUser(userData: ServerUserData?) {
         _state.update { userData }
