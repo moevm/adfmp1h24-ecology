@@ -3,6 +3,7 @@ package xyz.moevm.ecology.data.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,22 +23,22 @@ class UserDataViewModel(application: Application) : AndroidViewModel(application
         _state.update { userData }
     }
 
-    fun login(data: ServerAuthData) {
-        viewModelScope.launch { setUser(api.auth.login(data).body()) }
+    fun login(data: ServerAuthData): Job {
+        return viewModelScope.launch { setUser(api.auth.login(data).body()) }
     }
 
-    fun fetchUser() {
-        viewModelScope.launch { setUser(api.auth.getLogin().body()) }
+    fun fetchUser(): Job {
+        return viewModelScope.launch { setUser(api.auth.getLogin().body()) }
     }
 
-    fun logout() {
-        viewModelScope.launch {
+    fun logout(): Job {
+        return viewModelScope.launch {
             api.auth.logout()
             setUser(null)
         }
     }
 
-    fun devLogin() {
-        viewModelScope.launch { setUser(api.auth.devLogin().body()) }
+    fun devLogin(): Job {
+        return viewModelScope.launch { setUser(api.auth.devLogin().body()) }
     }
 }
