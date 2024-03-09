@@ -24,6 +24,7 @@ import xyz.moevm.ecology.data.types.AuthData
 
 @Composable
 fun AuthCard(
+    fail: Boolean = false,
     onInput: (data: AuthData) -> Unit = {},
     onDev: () -> Unit = {}
 ) {
@@ -39,13 +40,15 @@ fun AuthCard(
                 onValueChange = { authData = authData.copy(login = it) },
                 label = { Text("Логин") },
                 singleLine = true,
+                isError = fail
             )
             TextField(
                 value = authData.password,
                 onValueChange = { authData = authData.copy(password = it) },
                 label = { Text("Пароль") },
                 singleLine = true,
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                isError = fail
             )
 
             Row(
