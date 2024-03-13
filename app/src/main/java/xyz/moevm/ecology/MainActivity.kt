@@ -9,15 +9,26 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import xyz.moevm.ecology.data.viewmodels.UserDataViewModel
 import xyz.moevm.ecology.ui.components.BaseAppLayout
 import xyz.moevm.ecology.ui.theme.ADFMPEcologyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val userDataViewModel: UserDataViewModel =
+            ViewModelProvider(this)[UserDataViewModel::class.java]
+
+        lifecycleScope.launch {
+            userDataViewModel.fetchUser()
+        }
+
         setContent {
             ADFMPEcologyTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

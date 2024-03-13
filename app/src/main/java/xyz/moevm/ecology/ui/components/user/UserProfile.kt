@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,18 +26,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import xyz.moevm.ecology.data.types.UserData
+import androidx.lifecycle.viewmodel.compose.viewModel
 import xyz.moevm.ecology.data.types.UserProfileData
+import xyz.moevm.ecology.data.viewmodels.UserDataViewModel
 
 
 @Composable
 fun UserProfile(
-    userData: UserData,
     modifier: Modifier = Modifier,
     onChanged: (data: UserProfileData) -> Unit = {},
+    userDataVM: UserDataViewModel = viewModel()
 ) {
+    val userDataState by userDataVM.state.collectAsState()
+
+    if (userDataState === null) return
+
     var profileData by remember {
-        mutableStateOf(UserProfileData(userData.login, userData.password, userData.name))
+        mutableStateOf(
+            UserProfileData(
+                userDataState!!.login!!,
+                userDataState!!.password!!,
+                userDataState!!.name!!
+            )
+        )
     }
 
     Card(modifier) {
@@ -52,12 +64,14 @@ fun UserProfile(
                 tint = MaterialTheme.colorScheme.primary
             )
             Column(verticalArrangement = Arrangement.Center) {
-                AssistChip(onClick = { /*TODO*/ }, label = { Text(userData.role) })
+                AssistChip(
+                    onClick = { /*TODO*/ },
+                    label = { Text(userDataState!!.role.toString()) })
                 Row {
                     Text("Карма", modifier = Modifier.align(Alignment.CenterVertically))
                     AssistChip(
                         onClick = { /*TODO*/ },
-                        label = { Text(userData.karma.toString()) },
+                        label = { Text("0") },
                         Modifier.padding(start = 5.dp)
                     )
                 }
@@ -107,7 +121,5 @@ fun UserProfile(
 @Preview(showBackground = true)
 @Composable
 fun UserProfilePreview() {
-    UserProfile(
-        userData = UserData("login", "password", "Dmitriy", "user", 100)
-    )
+    UserProfile()
 }

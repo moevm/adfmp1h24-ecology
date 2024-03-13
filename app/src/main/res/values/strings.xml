@@ -11,6 +11,7 @@
     <string name="title">Ecology</string>
     <string name="filter">Отфильтровать таблицу</string>
     <string name="menu_about">О приложении</string>
+    <string name="menu_exit">Выйти из аккаунта</string>
 
     <string name="table_maps">Загруженные карты</string>
     <string name="table_maps_col_1">Имя</string>
