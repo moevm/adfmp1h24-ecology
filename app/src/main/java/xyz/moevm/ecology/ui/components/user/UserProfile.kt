@@ -46,7 +46,8 @@ fun UserProfile(
             UserProfileData(
                 userDataState!!.login!!,
                 userDataState!!.password!!,
-                userDataState!!.name!!
+                userDataState!!.name!!,
+                userDataState!!.karma!!
             )
         )
     }
@@ -71,7 +72,7 @@ fun UserProfile(
                     Text("Карма", modifier = Modifier.align(Alignment.CenterVertically))
                     AssistChip(
                         onClick = { /*TODO*/ },
-                        label = { Text("0") },
+                        label = { Text(profileData.karma.toString()) },
                         Modifier.padding(start = 5.dp)
                     )
                 }
