@@ -29,9 +29,9 @@ fun BottomNavigationBar(
         // Bottom nav items we declared
         val source = if (isAdmin) DataSource.AdminNavItems else DataSource.UserNavItems
 
-        source.forEach { navItem ->
+        source.filter { it.visible }.forEach { navItem ->
             // Place the bottom nav items
-            NavigationBarItem (
+            NavigationBarItem(
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.onPrimary,
                     selectedTextColor = MaterialTheme.colorScheme.onPrimary,
