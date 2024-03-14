@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import xyz.moevm.ecology.api.ApiViewModel
 import xyz.moevm.ecology.api.types.ServerAuthData
 import xyz.moevm.ecology.api.types.ServerUserData
+import xyz.moevm.ecology.api.types.ServerUserEditData
 import xyz.moevm.ecology.data.stores.KarmaMockViewModel
 
 class UserDataViewModel(application: Application) : AndroidViewModel(application) {
@@ -50,5 +51,14 @@ class UserDataViewModel(application: Application) : AndroidViewModel(application
 
     fun devLogin(): Job {
         return viewModelScope.launch { setUser(api.auth.devLogin().body()) }
+    }
+
+    fun edit(data: ServerUserEditData): Job {
+        return viewModelScope.launch {
+            api.users.editSelf(data)
+            _state.update {
+                it?.copy(login = data.login, password = data.password, name = data.name)
+            }
+        }
     }
 }
