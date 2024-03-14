@@ -5,6 +5,7 @@
     <string name="objects_list">Объекты</string>
     <string name="users_list">Люди</string>
     <string name="profile">Профиль</string>
+    <string name="user">Пользователь</string>
 
     <string name="add_object">Добавить объект</string>
     <string name="settings">Настройки</string>

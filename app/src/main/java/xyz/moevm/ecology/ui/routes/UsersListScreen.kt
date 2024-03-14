@@ -26,7 +26,9 @@ fun UsersListScreen(
     val users by usersVM.state.collectAsState()
 
     val rows = users.map { listOf(it.login!!, it.role!!, it.karma!!.toString()) }
-    val onRowClick = users.map { {} }
+    val onRowClick = users.map {
+        { navController.navigate("user/${it._id?.id}") }
+    }
 
     Table(
         header = stringResource(R.string.table_users),
