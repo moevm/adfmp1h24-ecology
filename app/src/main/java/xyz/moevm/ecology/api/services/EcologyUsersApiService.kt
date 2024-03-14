@@ -24,6 +24,6 @@ interface EcologyUsersApiService {
         @Body body: ServerUserEditData
     ): Response<String>
 
-    @POST("users/user/self")
+    @PUT("users/user/self")
     suspend fun editSelf(@Body body: ServerUserEditData): Response<String>
 }
