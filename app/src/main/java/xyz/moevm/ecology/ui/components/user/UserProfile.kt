@@ -51,7 +51,8 @@ fun UserProfile(
                 userDataState!!.login!!,
                 userDataState!!.password!!,
                 userDataState!!.name!!,
-                userDataState!!.karma!!
+                userDataState!!.karma!!,
+                userDataState!!.role!!
             )
         )
     }
@@ -69,16 +70,11 @@ fun UserProfile(
                 tint = MaterialTheme.colorScheme.primary
             )
             Column(verticalArrangement = Arrangement.Center) {
-                AssistChip(
-                    onClick = { /*TODO*/ },
-                    label = { Text(userDataState!!.role.toString()) })
+                RoleBadge(role = profileData.role, Modifier.padding(start = 5.dp))
+
                 Row {
                     Text("Карма", modifier = Modifier.align(Alignment.CenterVertically))
-                    AssistChip(
-                        onClick = { /*TODO*/ },
-                        label = { Text(profileData.karma.toString()) },
-                        Modifier.padding(start = 5.dp)
-                    )
+                    KarmaBadge(karma = profileData.karma, Modifier.padding(start = 5.dp))
                 }
             }
         }
