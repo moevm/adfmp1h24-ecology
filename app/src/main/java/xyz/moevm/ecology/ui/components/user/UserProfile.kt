@@ -39,6 +39,10 @@ fun UserProfile(
 ) {
     val userDataState by userDataVM.state.collectAsState()
 
+    var edited by remember {
+        mutableStateOf(false)
+    }
+
     if (userDataState === null) return
 
     var profileData by remember {
@@ -86,7 +90,7 @@ fun UserProfile(
 
             TextField(
                 value = profileData.login,
-                onValueChange = { profileData = profileData.copy(login = it) },
+                onValueChange = { profileData = profileData.copy(login = it); edited = true },
                 label = { Text("Логин") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -94,7 +98,7 @@ fun UserProfile(
 
             TextField(
                 value = profileData.password,
-                onValueChange = { profileData = profileData.copy(password = it) },
+                onValueChange = { profileData = profileData.copy(password = it); edited = true },
                 label = { Text("Пароль") },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
@@ -103,18 +107,28 @@ fun UserProfile(
 
             TextField(
                 value = profileData.name,
-                onValueChange = { profileData = profileData.copy(name = it) },
+                onValueChange = { profileData = profileData.copy(name = it); edited = true },
                 label = { Text("Имя") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Button(modifier = Modifier
-                .align(Alignment.End)
-                .padding(top = 10.dp), onClick = { onChanged(profileData) }) {
-                Text(text = "Сохранить")
-            }
+            Row(modifier = Modifier.padding(top = 10.dp)) {
+                if (edited)
+                    Text(
+                        text = "Есть несохранённые изменения",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.weight(2f),
+                        style = MaterialTheme.typography.labelSmall
+                    )
 
+                Button(
+                    modifier = Modifier.weight(1f),
+                    onClick = { onChanged(profileData); edited = false }
+                ) {
+                    Text(text = "Сохранить")
+                }
+            }
         }
     }
 }
