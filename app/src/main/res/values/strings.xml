@@ -26,4 +26,7 @@
     <string name="table_users_col_1">Логин</string>
     <string name="table_users_col_2">Роль</string>
     <string name="table_users_col_3">Карма</string>
+
+    <string name="admin_role">Администратор</string>
+    <string name="user_role">Пользователь</string>
 </resources>
