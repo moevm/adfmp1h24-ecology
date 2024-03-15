@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import xyz.moevm.ecology.data.DataSource
-import xyz.moevm.ecology.ui.components.user.OtherProfile
+import xyz.moevm.ecology.ui.routes.OtherProfileScreen
 import xyz.moevm.ecology.ui.routes.AboutScreen
 import xyz.moevm.ecology.ui.routes.MapScreen
 import xyz.moevm.ecology.ui.routes.MapsListScreen
@@ -76,7 +76,7 @@ fun NavHostContainer(
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
                 ) {
-                    OtherProfile(id = stack.arguments?.getString("id")!!)
+                    OtherProfileScreen(id = stack.arguments?.getString("id")!!)
                 }
             }
 
