@@ -15,12 +15,12 @@ interface EcologyUsersApiService {
 
     @GET("users/user/{id}")
     suspend fun getUser(
-        @Path("id") id: Int,
+        @Path("id") id: String,
     ): Response<ServerUserData>
 
     @PUT("users/user/{id}")
     suspend fun editUser(
-        @Path("id") id: Int,
+        @Path("id") id: String,
         @Body body: ServerUserEditData
     ): Response<String>
 
