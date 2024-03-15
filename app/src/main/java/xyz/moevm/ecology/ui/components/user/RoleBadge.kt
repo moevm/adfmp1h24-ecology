@@ -1,24 +1,19 @@
 package xyz.moevm.ecology.ui.components.user
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import xyz.moevm.ecology.data.util.translateRole
 
 @Composable
 fun RoleBadge(
     role: String,
     modifier: Modifier = Modifier
 ) {
-    val roleText = when (role) {
-        "admin" -> "Администратор"
-        "user" -> "Пользователь"
-        else -> role
-    }
+    val roleText = translateRole(role)
 
     val color = when (role) {
         "admin" -> MaterialTheme.colorScheme.primaryContainer
