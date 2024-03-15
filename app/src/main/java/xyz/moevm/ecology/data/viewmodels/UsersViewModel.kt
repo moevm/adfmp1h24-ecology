@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import xyz.moevm.ecology.api.ApiViewModel
 import xyz.moevm.ecology.api.types.ServerUserData
+import xyz.moevm.ecology.api.types.ServerUserEditData
 import xyz.moevm.ecology.data.stores.KarmaMockViewModel
 
 class UsersViewModel(application: Application) : AndroidViewModel(application) {
@@ -60,5 +61,19 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+    suspend fun edit(id: String, data: ServerUserEditData) {
+        api.users.editUser(id, data)
+    }
+
+    fun editCurrentUser(data: ServerUserEditData): Job {
+        return viewModelScope.launch {
+            edit(currentUser.value!!._id!!.id!!, data)
+            currentUserState.update {
+                it?.copy(login = data.login, password = data.password, name = data.name)
+            }
+        }
+    }
+
 
 }
