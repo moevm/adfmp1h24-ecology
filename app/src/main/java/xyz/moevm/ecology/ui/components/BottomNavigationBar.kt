@@ -7,18 +7,24 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import xyz.moevm.ecology.data.DataSource
+import xyz.moevm.ecology.data.viewmodels.UserDataViewModel
 
 
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
-    isAdmin: Boolean = true
+    userDataVM: UserDataViewModel = viewModel()
 ) {
+    val userData by userDataVM.state.collectAsState()
+    val isAdmin = userData?.role == "admin"
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
