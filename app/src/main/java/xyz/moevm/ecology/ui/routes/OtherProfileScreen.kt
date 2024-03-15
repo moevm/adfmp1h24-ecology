@@ -114,17 +114,18 @@ fun OtherProfileScreen(
                     }
                 )
 
-                TextField(
-                    readOnly = !isAdmin,
-                    value = profileData.password,
-                    label = { Text("Пароль") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                    onValueChange = {
-                        profileData = profileData.copy(password = it)
-                        edited = true
-                    }
-                )
+                if (isAdmin)
+                    TextField(
+                        readOnly = !isAdmin,
+                        value = profileData.password,
+                        label = { Text("Пароль") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        onValueChange = {
+                            profileData = profileData.copy(password = it)
+                            edited = true
+                        }
+                    )
 
                 TextField(
                     readOnly = !isAdmin,
