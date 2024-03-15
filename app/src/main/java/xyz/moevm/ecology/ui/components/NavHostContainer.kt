@@ -10,11 +10,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import xyz.moevm.ecology.data.DataSource
-import xyz.moevm.ecology.ui.routes.OtherProfileScreen
 import xyz.moevm.ecology.ui.routes.AboutScreen
 import xyz.moevm.ecology.ui.routes.MapScreen
 import xyz.moevm.ecology.ui.routes.MapsListScreen
 import xyz.moevm.ecology.ui.routes.ObjectsListScreen
+import xyz.moevm.ecology.ui.routes.OtherProfileScreen
 import xyz.moevm.ecology.ui.routes.ProfileScreen
 import xyz.moevm.ecology.ui.routes.ShareScreen
 import xyz.moevm.ecology.ui.routes.UsersListScreen
@@ -24,7 +24,6 @@ fun NavHostContainer(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     }
