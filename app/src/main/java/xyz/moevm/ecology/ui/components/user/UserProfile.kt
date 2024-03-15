@@ -1,5 +1,6 @@
 package xyz.moevm.ecology.ui.components.user
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -109,18 +110,17 @@ fun UserProfile(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Row(modifier = Modifier.padding(top = 10.dp)) {
-                if (edited)
-                    Text(
-                        text = "Есть несохранённые изменения",
-                        color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.weight(2f),
-                        style = MaterialTheme.typography.labelSmall
-                    )
-
+            AnimatedVisibility(
+                visible = edited,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(top = 10.dp)
+            ) {
                 Button(
-                    modifier = Modifier.weight(1f),
-                    onClick = { onChanged(profileData); edited = false }
+                    onClick = {
+                        onChanged(profileData)
+                        edited = false
+                    }
                 ) {
                     Text(text = "Сохранить")
                 }
@@ -128,6 +128,7 @@ fun UserProfile(
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
