@@ -162,14 +162,14 @@ fun OtherProfileScreen(
                 Row(modifier = Modifier.padding(top = 10.dp)) {
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = { usersVM.updateCurrentUserKarma(1) }
+                        onClick = { usersVM.updateCurrentUserKarma(self!!._id!!.id!!, 1) }
                     ) {
                         Text(text = "Чел харош!")
                     }
                     Spacer(modifier = Modifier.width(10.dp))
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = { usersVM.updateCurrentUserKarma(-1) },
+                        onClick = { usersVM.updateCurrentUserKarma(self!!._id!!.id!!, -1) },
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error)
                     ) {
                         Text(text = "Запостил кринж!")

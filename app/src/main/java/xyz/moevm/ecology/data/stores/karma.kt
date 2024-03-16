@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -14,6 +15,18 @@ import kotlinx.coroutines.flow.map
 class KarmaMockStore(private val context: Context) {
     companion object {
         private val Context.karmaMockStore: DataStore<Preferences> by preferencesDataStore(name = "karma-mock")
+    }
+
+    suspend fun vote(id1: String, id2: String, value: Boolean) {
+        val key = booleanPreferencesKey("$id1-$id2")
+        context.karmaMockStore.edit { prefs ->
+            prefs[key] = value
+        }
+    }
+
+    suspend fun getVote(id1: String, id2: String): Boolean? {
+        val key = booleanPreferencesKey("$id1-$id2")
+        return context.karmaMockStore.data.map { it[key] }.first()
     }
 
     suspend fun setUserKarma(id: String, karma: Int) {

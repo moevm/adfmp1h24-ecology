@@ -45,19 +45,26 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    suspend fun updateUserKarma(user: ServerUserData, value: Int): ServerUserData {
+    suspend fun updateUserKarma(selfId: String, user: ServerUserData, value: Int): ServerUserData {
         val karma = karmaMock.store.getUserKarma(user._id!!.id!!)
+        val vote = karmaMock.store.getVote(selfId, user._id.id!!)
+
+        val newVal = if ((vote == false && value < 0) || (vote == true && value > 0)) 0 else value
+
         karmaMock.store.setUserKarma(
-            user._id.id!!, karma + value
+            user._id.id, karma + newVal
         )
 
-        return user.copy(karma = karma + value)
+        if (newVal != 0)
+            karmaMock.store.vote(selfId, user._id.id, value > 0)
+
+        return user.copy(karma = karma + newVal)
     }
 
-    fun updateCurrentUserKarma(value: Int): Job {
+    fun updateCurrentUserKarma(selfId: String, value: Int): Job {
         return viewModelScope.launch {
             currentUserState.update {
-                updateUserKarma(currentUserState.value!!, value)
+                updateUserKarma(selfId, currentUserState.value!!, value)
             }
         }
     }
