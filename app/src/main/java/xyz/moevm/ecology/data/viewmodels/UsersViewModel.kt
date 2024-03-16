@@ -49,7 +49,13 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
         val karma = karmaMock.store.getUserKarma(user._id!!.id!!)
         val vote = karmaMock.store.getVote(selfId, user._id.id!!)
 
-        val newVal = if ((vote == false && value < 0) || (vote == true && value > 0)) 0 else value
+        val newVal =
+            if ((vote == false && value < 0) || (vote == true && value > 0)) 0
+            else if (
+                (vote == false && value > 0) ||
+                (vote == true && value < 0)
+            ) 2 * value
+            else value
 
         karmaMock.store.setUserKarma(
             user._id.id, karma + newVal
