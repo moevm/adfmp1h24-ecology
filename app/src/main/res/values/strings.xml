@@ -7,20 +7,37 @@
     <string name="profile">Профиль</string>
 
     <string name="add_object">Добавить объект</string>
+    <string name="share_object">Поделиться добавленным объектом</string>
     <string name="settings">Настройки</string>
     <string name="title">Ecology</string>
     <string name="filter">Отфильтровать таблицу</string>
     <string name="menu_about">О приложении</string>
     <string name="menu_exit">Выйти из аккаунта</string>
 
+    <string name="add_object_title">Добавление объекта</string>
+    <string name="add_object_name_inp_label">Имя объекта</string>
+    <string name="add_object_type_inp_label">Тип объекта</string>
+    <string name="add_object_inp_placeholder">Лес</string>
+    <string name="add_object_object_pos">Выбор места объекта</string>
+    <string name="add_object_delete_polygon">Удалить текущее выделение</string>
+    <string name="add_object_confirm">Добавить объект</string>
+    <string name="add_object_cancel">Отменить</string>
+
+    <string name="object_type_1">Лес</string>
+    <string name="object_type_2">Вырубка</string>
+    <string name="object_type_3">Поляна</string>
+    <string name="object_type_4">Дом</string>
+
     <string name="table_maps">Загруженные карты</string>
     <string name="table_maps_col_1">Имя</string>
     <string name="table_maps_col_2">Дата загрузки</string>
     <string name="table_maps_col_3">Размер(Мб)</string>
+
     <string name="table_objects">Объекты</string>
     <string name="table_objects_col_1">Имя</string>
     <string name="table_objects_col_2">Дата загрузки</string>
     <string name="table_objects_col_3">Пользователь</string>
+
     <string name="table_users">Пользователи</string>
     <string name="table_users_col_1">Логин</string>
     <string name="table_users_col_2">Роль</string>
