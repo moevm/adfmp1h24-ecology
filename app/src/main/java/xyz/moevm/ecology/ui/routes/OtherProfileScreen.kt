@@ -67,8 +67,20 @@ fun OtherProfileScreen(
                     currentUser!!.password!!,
                     currentUser!!.name!!,
                     currentUser!!.karma!!,
-                    currentUser!!.role!!
+                    currentUser!!.role!!,
+                    currentUser?._id?.id
                 )
+            )
+        }
+
+        if (profileData.id != currentUser?._id?.id) {
+            profileData = UserProfileData(
+                currentUser!!.login!!,
+                currentUser!!.password!!,
+                currentUser!!.name!!,
+                currentUser!!.karma!!,
+                currentUser!!.role!!,
+                currentUser?._id?.id
             )
         }
 

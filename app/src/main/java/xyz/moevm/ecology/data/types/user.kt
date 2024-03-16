@@ -7,5 +7,6 @@ data class UserProfileData(
     var password: String,
     var name: String,
     val karma: Int,
-    var role: String
+    var role: String,
+    var id: String? = null
 )
