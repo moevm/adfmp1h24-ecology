@@ -6,6 +6,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import xyz.moevm.ecology.api.services.EcologyAuthApiService
+import xyz.moevm.ecology.api.services.EcologyMapApiService
 import xyz.moevm.ecology.data.stores.CookiesViewModel
 
 const val SERVER_URL = "https://vladdoth.xyz/ecology/api/"
@@ -27,5 +28,9 @@ class ApiViewModel(application: Application) : AndroidViewModel(application) {
 
     val auth: EcologyAuthApiService by lazy {
         retrofit.create(EcologyAuthApiService::class.java)
+    }
+
+    val map: EcologyMapApiService by lazy {
+        retrofit.create(EcologyMapApiService::class.java)
     }
 }
