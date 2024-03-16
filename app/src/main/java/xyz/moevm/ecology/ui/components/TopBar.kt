@@ -54,7 +54,7 @@ fun TopBar(
                 colors = IconButtonDefaults.filledIconButtonColors(
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
-                onClick = { navController.navigate(DataSource.TopNavItems[2].route) }
+                onClick = { navController.navigate(DataSource.TopNavItems[0].route) }
             ) {
                 Icon(
                     imageVector = Icons.Filled.GpsFixed,
