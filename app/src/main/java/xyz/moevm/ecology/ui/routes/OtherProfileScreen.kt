@@ -44,10 +44,10 @@ fun OtherProfileScreen(
     usersVM: UsersViewModel = viewModel(),
     userDataVM: UserDataViewModel = viewModel()
 ) {
+    usersVM.fetchCurrentUser(id)
+
     val self by userDataVM.state.collectAsState()
     val currentUser by usersVM.currentUser.collectAsState()
-
-    usersVM.fetchCurrentUser(id)
 
     var edited by remember {
         mutableStateOf(false)
@@ -71,14 +71,6 @@ fun OtherProfileScreen(
                 )
             )
         }
-
-        profileData = UserProfileData(
-            currentUser!!.login!!,
-            currentUser!!.password!!,
-            currentUser!!.name!!,
-            currentUser!!.karma!!,
-            currentUser!!.role!!
-        )
 
         Card(modifier.fillMaxSize()) {
             Row(
