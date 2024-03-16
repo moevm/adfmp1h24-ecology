@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.Job
 import xyz.moevm.ecology.api.types.ServerAuthData
+import xyz.moevm.ecology.api.types.ServerUserEditData
 import xyz.moevm.ecology.ui.components.user.AuthCard
 import xyz.moevm.ecology.ui.components.user.UserProfile
 import xyz.moevm.ecology.data.viewmodels.UserDataViewModel
@@ -41,7 +42,10 @@ fun ProfileScreen(
         UserProfile(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(2.dp)
+                .padding(2.dp),
+            onChanged = {
+                userDataVM.edit(ServerUserEditData(it.login, it.password, it.name))
+            }
         )
     }
 

@@ -5,13 +5,16 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import xyz.moevm.ecology.data.DataSource
 import xyz.moevm.ecology.ui.routes.AboutScreen
 import xyz.moevm.ecology.ui.routes.MapScreen
 import xyz.moevm.ecology.ui.routes.MapsListScreen
 import xyz.moevm.ecology.ui.routes.ObjectsListScreen
+import xyz.moevm.ecology.ui.routes.OtherProfileScreen
 import xyz.moevm.ecology.ui.routes.ProfileScreen
 import xyz.moevm.ecology.ui.routes.ShareScreen
 import xyz.moevm.ecology.ui.routes.UsersListScreen
@@ -21,7 +24,6 @@ fun NavHostContainer(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     }
@@ -64,6 +66,19 @@ fun NavHostContainer(
                 }
             }
 
+            composable(
+                DataSource.UserNavItems[4].route,
+                arguments = listOf(
+                    navArgument("id") { type = NavType.StringType }
+                )
+            ) { stack ->
+                CompositionLocalProvider(
+                    LocalViewModelStoreOwner provides viewModelStoreOwner
+                ) {
+                    OtherProfileScreen(id = stack.arguments?.getString("id")!!)
+                }
+            }
+
             composable(DataSource.TopNavItems[0].route) {
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
@@ -96,6 +111,7 @@ fun NavHostContainer(
                     UsersListScreen(navController)
                 }
             }
+
         }
     )
 }

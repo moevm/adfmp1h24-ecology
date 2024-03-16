@@ -31,7 +31,8 @@ object DataSource {
             label = R.string.profile,
             icon = Icons.Filled.Person,
             route = "profile"
-        )
+        ),
+        NavItem(R.string.user, icon = Icons.Filled.Person, "user/{id}", false)
     )
 
     val AdminNavItems = listOf(
@@ -59,7 +60,8 @@ object DataSource {
             label = R.string.profile,
             icon = Icons.Filled.Person,
             route = "profile"
-        )
+        ),
+        NavItem(R.string.user, icon = Icons.Filled.Person, "user/{id}", false)
     )
 
     val TopNavItems = listOf(

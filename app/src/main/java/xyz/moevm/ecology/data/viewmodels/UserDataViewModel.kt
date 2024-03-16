@@ -12,15 +12,26 @@ import kotlinx.coroutines.launch
 import xyz.moevm.ecology.api.ApiViewModel
 import xyz.moevm.ecology.api.types.ServerAuthData
 import xyz.moevm.ecology.api.types.ServerUserData
+import xyz.moevm.ecology.api.types.ServerUserEditData
+import xyz.moevm.ecology.data.stores.KarmaMockViewModel
 
 class UserDataViewModel(application: Application) : AndroidViewModel(application) {
     private val api = ApiViewModel(application)
+    private val karmaMock = KarmaMockViewModel(application)
 
     private val _state = MutableStateFlow<ServerUserData?>(null)
     val state: StateFlow<ServerUserData?> = _state.asStateFlow()
 
     private fun setUser(userData: ServerUserData?) {
-        _state.update { userData }
+        viewModelScope.launch {
+            _state.update {
+                if (userData?.karma === null)
+                    userData?.copy(
+                        karma = karmaMock.store.getUserKarma(userData._id!!.id!!)
+                    )
+                else userData
+            }
+        }
     }
 
     fun login(data: ServerAuthData): Job {
@@ -40,5 +51,14 @@ class UserDataViewModel(application: Application) : AndroidViewModel(application
 
     fun devLogin(): Job {
         return viewModelScope.launch { setUser(api.auth.devLogin().body()) }
+    }
+
+    fun edit(data: ServerUserEditData): Job {
+        return viewModelScope.launch {
+            api.users.editSelf(data)
+            _state.update {
+                it?.copy(login = data.login, password = data.password, name = data.name)
+            }
+        }
     }
 }
