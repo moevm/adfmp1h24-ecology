@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import xyz.moevm.ecology.api.services.EcologyAuthApiService
 import xyz.moevm.ecology.api.services.EcologyMapApiService
+import xyz.moevm.ecology.api.services.EcologyUsersApiService
 import xyz.moevm.ecology.data.stores.CookiesViewModel
 
 const val SERVER_URL = "https://vladdoth.xyz/ecology/api/"
@@ -34,5 +35,8 @@ class ApiViewModel(application: Application) : AndroidViewModel(application) {
 
     val map: EcologyMapApiService by lazy {
         retrofit.create(EcologyMapApiService::class.java)
+
+    val users: EcologyUsersApiService by lazy {
+        retrofit.create(EcologyUsersApiService::class.java)
     }
 }

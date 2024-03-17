@@ -1,5 +1,6 @@
 package xyz.moevm.ecology.ui.components.user
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,6 +40,10 @@ fun UserProfile(
 ) {
     val userDataState by userDataVM.state.collectAsState()
 
+    var edited by remember {
+        mutableStateOf(false)
+    }
+
     if (userDataState === null) return
 
     var profileData by remember {
@@ -46,7 +51,9 @@ fun UserProfile(
             UserProfileData(
                 userDataState!!.login!!,
                 userDataState!!.password!!,
-                userDataState!!.name!!
+                userDataState!!.name!!,
+                userDataState!!.karma!!,
+                userDataState!!.role!!
             )
         )
     }
@@ -64,16 +71,11 @@ fun UserProfile(
                 tint = MaterialTheme.colorScheme.primary
             )
             Column(verticalArrangement = Arrangement.Center) {
-                AssistChip(
-                    onClick = { /*TODO*/ },
-                    label = { Text(userDataState!!.role.toString()) })
+                RoleBadge(role = profileData.role, Modifier.padding(start = 5.dp))
+
                 Row {
                     Text("Карма", modifier = Modifier.align(Alignment.CenterVertically))
-                    AssistChip(
-                        onClick = { /*TODO*/ },
-                        label = { Text("0") },
-                        Modifier.padding(start = 5.dp)
-                    )
+                    KarmaBadge(karma = profileData.karma, Modifier.padding(start = 5.dp))
                 }
             }
         }
@@ -85,7 +87,7 @@ fun UserProfile(
 
             TextField(
                 value = profileData.login,
-                onValueChange = { profileData = profileData.copy(login = it) },
+                onValueChange = { profileData = profileData.copy(login = it); edited = true },
                 label = { Text("Логин") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -93,7 +95,7 @@ fun UserProfile(
 
             TextField(
                 value = profileData.password,
-                onValueChange = { profileData = profileData.copy(password = it) },
+                onValueChange = { profileData = profileData.copy(password = it); edited = true },
                 label = { Text("Пароль") },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
@@ -102,21 +104,31 @@ fun UserProfile(
 
             TextField(
                 value = profileData.name,
-                onValueChange = { profileData = profileData.copy(name = it) },
+                onValueChange = { profileData = profileData.copy(name = it); edited = true },
                 label = { Text("Имя") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Button(modifier = Modifier
-                .align(Alignment.End)
-                .padding(top = 10.dp), onClick = { onChanged(profileData) }) {
-                Text(text = "Сохранить")
+            AnimatedVisibility(
+                visible = edited,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(top = 10.dp)
+            ) {
+                Button(
+                    onClick = {
+                        onChanged(profileData)
+                        edited = false
+                    }
+                ) {
+                    Text(text = "Сохранить")
+                }
             }
-
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

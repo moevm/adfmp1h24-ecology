@@ -12,7 +12,8 @@ data class ServerUserData(
     val login: String? = null,
     val password: String? = null,
     val name: String? = null,
-    val role: String? = null
+    val role: String? = null,
+    val karma: Int? = null
 )
 
 data class ServerAuthData(
