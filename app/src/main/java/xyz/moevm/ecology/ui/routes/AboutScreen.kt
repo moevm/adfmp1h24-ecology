@@ -20,7 +20,7 @@ fun AboutScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(21.dp)
     ) {

@@ -8,9 +8,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import kotlinx.serialization.descriptors.StructureKind
 import androidx.navigation.navArgument
 import xyz.moevm.ecology.data.DataSource
 import xyz.moevm.ecology.ui.routes.AboutScreen
+import xyz.moevm.ecology.ui.routes.AddObjectScreen
+import xyz.moevm.ecology.ui.routes.ConnectionErrorScreen
 import xyz.moevm.ecology.ui.routes.MapScreen
 import xyz.moevm.ecology.ui.routes.MapsListScreen
 import xyz.moevm.ecology.ui.routes.ObjectsListScreen
@@ -83,7 +86,7 @@ fun NavHostContainer(
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
                 ) {
-                    MapScreen()
+                    AddObjectScreen(navController)
                 }
             }
 
@@ -91,7 +94,7 @@ fun NavHostContainer(
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
                 ) {
-                    AboutScreen(navController)
+                    ShareScreen()
                 }
             }
 
@@ -99,7 +102,15 @@ fun NavHostContainer(
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
                 ) {
-                    ShareScreen(navController)
+                    AboutScreen(navController)
+                }
+            }
+
+            composable(DataSource.TopNavItems[3].route) {
+                CompositionLocalProvider(
+                    LocalViewModelStoreOwner provides viewModelStoreOwner
+                ) {
+                    AddObjectScreen(navController)
                 }
             }
 
@@ -109,6 +120,15 @@ fun NavHostContainer(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
                 ) {
                     UsersListScreen(navController)
+                }
+            }
+
+            // Экран ошибки подключения.
+            composable(DataSource.connectionErrorScreenRoute) {
+                CompositionLocalProvider(
+                    LocalViewModelStoreOwner provides viewModelStoreOwner
+                ) {
+                    ConnectionErrorScreen()
                 }
             }
 

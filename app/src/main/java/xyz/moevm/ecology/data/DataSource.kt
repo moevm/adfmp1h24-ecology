@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Satellite
 import androidx.compose.material.icons.filled.Terrain
+import androidx.compose.ui.res.stringResource
 import xyz.moevm.ecology.R
 import xyz.moevm.ecology.data.types.NavItem
 import xyz.moevm.ecology.data.types.TopNavItem
@@ -34,7 +35,6 @@ object DataSource {
         ),
         NavItem(R.string.user, icon = Icons.Filled.Person, "user/{id}", false)
     )
-
     val AdminNavItems = listOf(
         NavItem(
             label = R.string.map,
@@ -63,20 +63,37 @@ object DataSource {
         ),
         NavItem(R.string.user, icon = Icons.Filled.Person, "user/{id}", false)
     )
-
     val TopNavItems = listOf(
         TopNavItem(
             label = R.string.add_object,
             route = "add_object"
         ),
         TopNavItem(
+            label = R.string.share_object,
+            route = "share_screen"
+        ),
+        TopNavItem(
             label = R.string.title,
-            route = "title"
+            route = "about"
         ),
         TopNavItem(
             label = R.string.settings,
             route = "settings"
         )
     )
+    val connectionErrorScreenRoute = "connection_error"
 
+    val objectTypes = listOf(
+        R.string.object_type_1,
+        R.string.object_type_2,
+        R.string.object_type_3,
+        R.string.object_type_4,
+    )
+
+    val objectTypesColors = mapOf(
+        Pair(R.string.object_type_1, "green"),
+        Pair(R.string.object_type_2, "red"),
+        Pair(R.string.object_type_3, "aquamarine"),
+        Pair(R.string.object_type_4, "darkgrey"),
+    )
 }
