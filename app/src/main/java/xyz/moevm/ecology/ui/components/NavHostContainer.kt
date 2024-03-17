@@ -13,6 +13,7 @@ import androidx.navigation.navArgument
 import xyz.moevm.ecology.data.DataSource
 import xyz.moevm.ecology.ui.routes.AboutScreen
 import xyz.moevm.ecology.ui.routes.AddObjectScreen
+import xyz.moevm.ecology.ui.routes.ConnectionErrorScreen
 import xyz.moevm.ecology.ui.routes.MapScreen
 import xyz.moevm.ecology.ui.routes.MapsListScreen
 import xyz.moevm.ecology.ui.routes.ObjectsListScreen
@@ -119,6 +120,15 @@ fun NavHostContainer(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
                 ) {
                     UsersListScreen(navController)
+                }
+            }
+
+            // Экран ошибки подключения.
+            composable(DataSource.connectionErrorScreenRoute) {
+                CompositionLocalProvider(
+                    LocalViewModelStoreOwner provides viewModelStoreOwner
+                ) {
+                    ConnectionErrorScreen()
                 }
             }
 

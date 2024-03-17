@@ -1,5 +1,6 @@
 package xyz.moevm.ecology.ui.routes
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.location.Location
@@ -43,6 +44,9 @@ import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
@@ -65,7 +69,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import kotlin.math.pow
 
-@SuppressLint("SimpleDateFormat")
+@OptIn(ExperimentalPermissionsApi::class)
+@SuppressLint("SimpleDateFormat", "MissingPermission")
 @Composable
 fun AddObjectScreen(
     navController: NavHostController,
@@ -73,6 +78,10 @@ fun AddObjectScreen(
     mapDataVM: MapDataViewModel = viewModel(),
     userDataVM: UserDataViewModel = viewModel()
 ) {
+    // Для проверки разрешения на геолокацию.
+    val fineLocation = rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
+    val coarseLocation = rememberPermissionState(permission = Manifest.permission.ACCESS_COARSE_LOCATION)
+
     val userDataState by userDataVM.state.collectAsState()
 
     val objectTypes: List<String> = DataSource.objectTypes.map { stringResource(it) }
@@ -181,6 +190,11 @@ fun AddObjectScreen(
                 }
             ) {
                 MapEffect(mapModeDraw, coordinates, objectType) { map ->
+                    // Включение кнопки геолокации, если разрешение есть.
+                    if (fineLocation.status.isGranted || coarseLocation.status.isGranted) {
+                        map.isMyLocationEnabled = true
+                    }
+
                     map.clear()
                     val colorInt = parseObjColor(objectColorMap[objectType]!!)
                     if (mapModeDraw) {

@@ -35,7 +35,6 @@ object DataSource {
         ),
         NavItem(R.string.user, icon = Icons.Filled.Person, "user/{id}", false)
     )
-
     val AdminNavItems = listOf(
         NavItem(
             label = R.string.map,
@@ -64,7 +63,6 @@ object DataSource {
         ),
         NavItem(R.string.user, icon = Icons.Filled.Person, "user/{id}", false)
     )
-
     val TopNavItems = listOf(
         TopNavItem(
             label = R.string.add_object,
@@ -76,13 +74,14 @@ object DataSource {
         ),
         TopNavItem(
             label = R.string.title,
-            route = "title"
+            route = "about"
         ),
         TopNavItem(
             label = R.string.settings,
             route = "settings"
         )
     )
+    val connectionErrorScreenRoute = "connection_error"
 
     val objectTypes = listOf(
         R.string.object_type_1,

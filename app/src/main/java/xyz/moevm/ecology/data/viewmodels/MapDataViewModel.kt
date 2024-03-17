@@ -32,8 +32,11 @@ class MapDataViewModel(application: Application) : AndroidViewModel(application)
     private val _lastAddedObject = MutableStateFlow<SendObjectInfo?>(null)
     val lastAddedObject: StateFlow<SendObjectInfo?> = _lastAddedObject.asStateFlow()
 
-    private val _objectAddCallState = MutableStateFlow<CallState>(CallState.WAITING)
-    val objectAddCallState: StateFlow<CallState> = _objectAddCallState.asStateFlow()
+    private val _lastCallState = MutableStateFlow<CallState>(CallState.WAITING)
+    val lastCallState: StateFlow<CallState> = _lastCallState.asStateFlow()
+
+    private val _userGeoPermissionAsked = MutableStateFlow<Boolean>(false)
+    val userGeoPermissionAsked: StateFlow<Boolean> = _userGeoPermissionAsked.asStateFlow()
 
     private fun setObjects(objectsList: List<ObjectInfo>?) {
         _objects.update { objectsList }
@@ -47,21 +50,48 @@ class MapDataViewModel(application: Application) : AndroidViewModel(application)
         _cameraPos.update { newCameraPos }
     }
 
+    fun setObject(newAddedObject: SendObjectInfo?) {
+        _lastAddedObject.update { newAddedObject }
+    }
+
+    private fun setCallState(callState: CallState) {
+        _lastCallState.update { callState }
+    }
+
+    fun setUserGeoPermissionAsked(asked: Boolean) {
+        _userGeoPermissionAsked.update { asked }
+    }
+
+
     fun getMapsAndObjectsNear(y: Double, x: Double, r: Double) = viewModelScope.launch {
-        setMaps(api.map.getMapsNear(y, x, r).body())
-        setObjects(api.map.getObjectsNear(y, x, r).body())
+        var respMaps: List<MapInfo>? = null
+        var respObjects: List<ObjectInfo>? = null
+
+        kotlin.runCatching {
+            respMaps = api.map.getMapsNear(y, x, r).body()
+            respObjects = api.map.getObjectsNear(y, x, r).body()
+        }.onSuccess {
+            setMaps(respMaps)
+            setObjects(respObjects)
+        }.onFailure{
+            // Можно что-то сделать с ошибкой, но логи тоже ничего )
+            it.printStackTrace()
+        }
     }
 
     fun updateObjects(createdObj: SendObjectInfo) = viewModelScope.launch {
-        _objectAddCallState.update { CallState.WAITING }
         val objChangeInfo = ObjectsChangeInfo(listOf(createdObj), listOf(), listOf())
-        _lastAddedObject.update { createdObj }
 
-        val result = async { api.map.updateObjects(objChangeInfo) }.await()
-        if (result.isSuccessful) {
-            _objectAddCallState.update { CallState.SUCCESS }
-        } else {
-            _objectAddCallState.update { CallState.ERROR }
+        kotlin.runCatching {
+            setCallState(CallState.WAITING)
+            api.map.updateObjects(objChangeInfo)
+        }.onSuccess {
+            setObject(createdObj)
+            setCallState(CallState.SUCCESS)
+        }.onFailure{
+            // Можно что-то сделать с ошибкой, но логи тоже ничего )
+            setCallState(CallState.ERROR)
+            it.printStackTrace()
         }
     }
 }

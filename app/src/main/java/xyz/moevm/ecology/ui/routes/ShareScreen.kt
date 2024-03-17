@@ -56,7 +56,7 @@ fun ShareScreen(
     modifier: Modifier = Modifier,
     mapDataVM: MapDataViewModel = viewModel()
 ) {
-    val objectAddCallState by mapDataVM.objectAddCallState.collectAsState()
+    val objectAddCallState by mapDataVM.lastCallState.collectAsState()
     val lastAddedObject by mapDataVM.lastAddedObject.collectAsState()
 
     when (objectAddCallState) {
@@ -71,6 +71,9 @@ fun ShareScreen(
             modifier = modifier
         )
         CallState.ERROR -> ErrorShareScreen(
+            modifier = modifier
+        )
+        else -> ErrorShareScreen(
             modifier = modifier
         )
     }
@@ -152,9 +155,10 @@ fun SuccessShareScreen(
             }
         }
 
-        Button(modifier = Modifier
-            .align(Alignment.End)
-            .padding(top = 10.dp), onClick = { /* Do something or nothing */ }) {
+        Button(
+            modifier = Modifier.align(Alignment.End).padding(top = 10.dp),
+            onClick = { /* Do something or nothing */ }
+        ) {
             Text(text = stringResource(id = R.string.share_screen_success_4))
         }
     }

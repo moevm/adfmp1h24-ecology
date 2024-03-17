@@ -59,7 +59,7 @@ fun TopBar(
         },
         title = {
             TextButton(
-                onClick = { navController.navigate(DataSource.TopNavItems[0].route) }
+                onClick = { navController.navigate(DataSource.TopNavItems[2].route) }
             ) {
                 Text(
                     stringResource(R.string.title),
@@ -82,7 +82,7 @@ fun TopBar(
 
             DropdownMenu(expanded = displayMenu, onDismissRequest = { displayMenu = false }) {
                 DropdownMenuItem(
-                    onClick = { navController.navigate(DataSource.TopNavItems[1].route) },
+                    onClick = { navController.navigate(DataSource.TopNavItems[2].route) },
                     text = {
                         Text(stringResource(R.string.menu_about))
                     }

@@ -34,6 +34,11 @@
     <string name="share_screen_error_1">Произошла ошибка при отправке.</string>
     <string name="share_screen_error_2">Попробуйте позже.</string>
 
+    <string name="connection_error_screen_1">Пропало соединение с сервером.</string>
+    <string name="connection_error_screen_2">Проверьте интернет соединение на устройстве.</string>
+    <string name="connection_error_screen_3">Переподключиться</string>
+    <string name="connection_error_screen_4">Не удалось переподключиться.</string>
+
     <string name="object_type_1">Лес</string>
     <string name="object_type_2">Вырубка</string>
     <string name="object_type_3">Поляна</string>

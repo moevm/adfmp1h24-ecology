@@ -1,5 +1,7 @@
 package xyz.moevm.ecology.ui.routes
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.location.Location
 import androidx.compose.foundation.layout.Box
@@ -8,11 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolygonOptions
@@ -24,14 +31,29 @@ import kotlinx.coroutines.delay
 import xyz.moevm.ecology.api.parseObjColor
 import xyz.moevm.ecology.data.viewmodels.MapDataViewModel
 import kotlin.math.pow
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.accompanist.permissions.rememberPermissionState
 
 
-@OptIn(MapsComposeExperimentalApi::class)
+@SuppressLint("MissingPermission")
+@OptIn(MapsComposeExperimentalApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun MapScreen(
     modifier: Modifier = Modifier,
     mapDataVM: MapDataViewModel = viewModel()
 ) {
+    // Для получения разрешения на геолокацию.
+    val fineLocation = rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
+    val coarseLocation = rememberPermissionState(permission = Manifest.permission.ACCESS_COARSE_LOCATION)
+    val allLocations = rememberMultiplePermissionsState(
+        permissions = listOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    )
+    // Спрашивали ли пользователя за время запуска приложения уже?
+    val userGeoPermissionAsked by mapDataVM.userGeoPermissionAsked.collectAsState()
+
     // Объекты на карте.
     val mapsDataState by mapDataVM.maps.collectAsState()
     val objectsDataState by mapDataVM.objects.collectAsState()
@@ -44,7 +66,7 @@ fun MapScreen(
     var lastZoom = 10f
     var lastScanRadius = 50000.0
 
-    // Получаем начальные обхекты и изображения.
+    // Получаем начальные объекты и изображения.
     mapDataVM.getMapsAndObjectsNear(lastPos.latitude, lastPos.longitude, lastScanRadius)
 
     val cameraPositionState = rememberCameraPositionState {
@@ -87,6 +109,14 @@ fun MapScreen(
             cameraPositionState = cameraPositionState
         ) {
             MapEffect(mapsDataState, objectsDataState) { map ->
+                // Включение кнопки геолокации или запрос разрешения пользователя.
+                if (fineLocation.status.isGranted || coarseLocation.status.isGranted) {
+                    map.isMyLocationEnabled = true
+                } else if (!userGeoPermissionAsked) {
+                    allLocations.launchMultiplePermissionRequest()
+                    mapDataVM.setUserGeoPermissionAsked(true)
+                }
+
                 map.clear()
                 // Добавляем текущие тайлы на карту.
                 // P.S. Это не работает, потому что google map тайлеру не нравятся тайлы, которые

@@ -23,9 +23,7 @@ class ApiViewModel(application: Application) : AndroidViewModel(application) {
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .client(
-            okHttp.build()
-        )
+        .client(okHttp.build())
         .baseUrl(SERVER_URL)
         .build()
 

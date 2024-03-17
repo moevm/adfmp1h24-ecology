@@ -20,32 +20,14 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
     private val usersListState = MutableStateFlow<List<ServerUserData>>(emptyList())
     val usersList = usersListState.asStateFlow()
 
-    fun fetchUsers(): Job {
-        return viewModelScope.launch {
-            usersListState.update {
-                api.users.getUsersList().body()?.map {
-                    it.copy(karma = karmaMock.store.getUserKarma(it._id!!.id!!))
-                } ?: emptyList()
-            }
-        }
-    }
-
     private val currentUserState = MutableStateFlow<ServerUserData?>(null)
     val currentUser = currentUserState.asStateFlow()
 
-    suspend fun fetchUser(id: String) = api.users.getUser(id).body()?.copy(
+    private suspend fun fetchUser(id: String) = api.users.getUser(id).body()?.copy(
         karma = karmaMock.store.getUserKarma(id)
     )
 
-    fun fetchCurrentUser(id: String): Job {
-        return viewModelScope.launch {
-            currentUserState.update {
-                fetchUser(id)
-            }
-        }
-    }
-
-    suspend fun updateUserKarma(selfId: String, user: ServerUserData, value: Int): ServerUserData {
+    private suspend fun updateUserKarma(selfId: String, user: ServerUserData, value: Int): ServerUserData {
         val karma = karmaMock.store.getUserKarma(user._id!!.id!!)
         val vote = karmaMock.store.getVote(selfId, user._id.id!!)
 
@@ -57,9 +39,7 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
             ) 2 * value
             else value
 
-        karmaMock.store.setUserKarma(
-            user._id.id, karma + newVal
-        )
+        karmaMock.store.setUserKarma(user._id.id, karma + newVal)
 
         if (newVal != 0)
             karmaMock.store.vote(selfId, user._id.id, value > 0)
@@ -67,26 +47,61 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
         return user.copy(karma = karma + newVal)
     }
 
-    fun updateCurrentUserKarma(selfId: String, value: Int): Job {
-        return viewModelScope.launch {
-            currentUserState.update {
-                updateUserKarma(selfId, currentUserState.value!!, value)
-            }
-        }
-    }
-
-    suspend fun edit(id: String, data: ServerUserEditData) {
+    private suspend fun edit(id: String, data: ServerUserEditData) {
         api.users.editUser(id, data)
     }
 
-    fun editCurrentUser(data: ServerUserEditData): Job {
-        return viewModelScope.launch {
-            edit(currentUser.value!!._id!!.id!!, data)
-            currentUserState.update {
-                it?.copy(login = data.login, password = data.password, name = data.name)
-            }
+    fun fetchUsers()= viewModelScope.launch {
+        var respUsersListState: List<ServerUserData> = emptyList()
+
+        kotlin.runCatching {
+            respUsersListState = api.users.getUsersList().body()?.map {
+                it.copy(karma = karmaMock.store.getUserKarma(it._id!!.id!!))
+            } ?: emptyList()
+        }.onSuccess {
+            usersListState.update { respUsersListState }
+        }.onFailure{
+            // Можно что-то сделать с ошибкой, но логи тоже ничего )
+            it.printStackTrace()
         }
     }
 
+    fun fetchCurrentUser(id: String) = viewModelScope.launch {
+        var respUserState: ServerUserData? = null
 
+        kotlin.runCatching {
+            respUserState = fetchUser(id)
+        }.onSuccess {
+            currentUserState.update { respUserState }
+        }.onFailure{
+            // Можно что-то сделать с ошибкой, но логи тоже ничего )
+            it.printStackTrace()
+        }
+    }
+
+    fun updateCurrentUserKarma(selfId: String, value: Int)= viewModelScope.launch {
+        var respUserState: ServerUserData? = null
+
+        kotlin.runCatching {
+            respUserState = updateUserKarma(selfId, currentUserState.value!!, value)
+        }.onSuccess {
+            currentUserState.update { respUserState }
+        }.onFailure{
+            // Можно что-то сделать с ошибкой, но логи тоже ничего )
+            it.printStackTrace()
+        }
+    }
+
+    fun editCurrentUser(data: ServerUserEditData) = viewModelScope.launch {
+        kotlin.runCatching {
+            edit(currentUser.value!!._id!!.id!!, data)
+        }.onSuccess {
+            currentUserState.update {
+                it?.copy(login = data.login, password = data.password, name = data.name)
+            }
+        }.onFailure{
+            // Можно что-то сделать с ошибкой, но логи тоже ничего )
+            it.printStackTrace()
+        }
+    }
 }
