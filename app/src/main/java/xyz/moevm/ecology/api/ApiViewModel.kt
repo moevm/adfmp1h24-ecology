@@ -35,6 +35,7 @@ class ApiViewModel(application: Application) : AndroidViewModel(application) {
 
     val map: EcologyMapApiService by lazy {
         retrofit.create(EcologyMapApiService::class.java)
+    }
 
     val users: EcologyUsersApiService by lazy {
         retrofit.create(EcologyUsersApiService::class.java)

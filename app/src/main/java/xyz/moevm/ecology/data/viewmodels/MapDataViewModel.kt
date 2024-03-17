@@ -29,6 +29,9 @@ class MapDataViewModel(application: Application) : AndroidViewModel(application)
     private val _cameraPos = MutableStateFlow<LatLng>(LatLng(59.93863, 30.31413))
     val cameraPos: StateFlow<LatLng> = _cameraPos.asStateFlow()
 
+    private val _lastAddedObject = MutableStateFlow<SendObjectInfo?>(null)
+    val lastAddedObject: StateFlow<SendObjectInfo?> = _lastAddedObject.asStateFlow()
+
     private val _objectAddCallState = MutableStateFlow<CallState>(CallState.WAITING)
     val objectAddCallState: StateFlow<CallState> = _objectAddCallState.asStateFlow()
 
@@ -52,6 +55,7 @@ class MapDataViewModel(application: Application) : AndroidViewModel(application)
     fun updateObjects(createdObj: SendObjectInfo) = viewModelScope.launch {
         _objectAddCallState.update { CallState.WAITING }
         val objChangeInfo = ObjectsChangeInfo(listOf(createdObj), listOf(), listOf())
+        _lastAddedObject.update { createdObj }
 
         val result = async { api.map.updateObjects(objChangeInfo) }.await()
         if (result.isSuccessful) {

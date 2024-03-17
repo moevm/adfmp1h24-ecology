@@ -93,7 +93,7 @@ fun NavHostContainer(
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
                 ) {
-                    ShareScreen(navController)
+                    ShareScreen()
                 }
             }
 

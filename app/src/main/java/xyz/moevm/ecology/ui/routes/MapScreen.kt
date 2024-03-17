@@ -29,6 +29,7 @@ import kotlin.math.pow
 @OptIn(MapsComposeExperimentalApi::class)
 @Composable
 fun MapScreen(
+    modifier: Modifier = Modifier,
     mapDataVM: MapDataViewModel = viewModel()
 ) {
     // Объекты на карте.
@@ -79,7 +80,7 @@ fun MapScreen(
 
     // Добавляем карту.
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         GoogleMap(
             modifier = Modifier.fillMaxSize(),

@@ -25,6 +25,15 @@
     <string name="add_object_confirm">Добавить объект</string>
     <string name="add_object_cancel">Отменить</string>
 
+    <string name="share_screen_success_1">Успех!</string>
+    <string name="share_screen_success_2">Имя объекта: </string>
+    <string name="share_screen_success_3">Тип объекта: </string>
+    <string name="share_screen_success_4">Поделиться</string>
+    <string name="share_screen_wait_1">Идет отправка.</string>
+    <string name="share_screen_wait_2">Пожалуйста, подождите...</string>
+    <string name="share_screen_error_1">Произошла ошибка при отправке.</string>
+    <string name="share_screen_error_2">Попробуйте позже.</string>
+
     <string name="object_type_1">Лес</string>
     <string name="object_type_2">Вырубка</string>
     <string name="object_type_3">Поляна</string>

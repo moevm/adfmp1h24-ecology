@@ -40,7 +40,7 @@ fun ProfileScreen(
 
     AnimatedVisibility(visible = authed) {
         UserProfile(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(2.dp),
             onChanged = {
@@ -51,7 +51,7 @@ fun ProfileScreen(
 
     AnimatedVisibility(visible = !authed) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             AuthCard(
