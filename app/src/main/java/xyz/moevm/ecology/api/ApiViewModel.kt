@@ -3,6 +3,7 @@ package xyz.moevm.ecology.api
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import xyz.moevm.ecology.api.services.EcologyAuthApiService
@@ -15,13 +16,14 @@ class ApiViewModel(application: Application) : AndroidViewModel(application) {
     private val cookiesVM = CookiesViewModel(application)
     private val cookieJar = DataStoreCookieJar(cookiesVM)
 
+    private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val okHttp = OkHttpClient().newBuilder().cookieJar(cookieJar)
+        .addInterceptor((logger)) // Логи запросов
+
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .client(
-            OkHttpClient()
-                .newBuilder()
-                .cookieJar(cookieJar)
-                .build()
+            okHttp.build()
         )
         .baseUrl(SERVER_URL)
         .build()
