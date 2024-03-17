@@ -1,7 +1,6 @@
 package xyz.moevm.ecology.ui.routes
 
 import android.graphics.Color
-import android.graphics.Point
 import android.location.Location
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,20 +16,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolygonOptions
-import com.google.android.gms.maps.model.TileOverlayOptions
-import com.google.android.gms.maps.model.TileProvider
-import com.google.android.gms.maps.model.UrlTileProvider
-import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapEffect
 import com.google.maps.android.compose.MapsComposeExperimentalApi
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
-import xyz.moevm.ecology.api.SERVER_URL
 import xyz.moevm.ecology.api.parseObjColor
 import xyz.moevm.ecology.data.viewmodels.MapDataViewModel
-import java.net.MalformedURLException
-import java.net.URL
 import kotlin.math.pow
 
 
