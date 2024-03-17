@@ -20,6 +20,7 @@
     <string name="add_object_inp_placeholder">Лес</string>
     <string name="add_object_object_pos">Выбор места объекта</string>
     <string name="add_object_delete_polygon">Удалить текущее выделение</string>
+    <string name="error_login">Не авторизованные пользователи не могут добавить объект</string>
     <string name="add_object_confirm">Добавить объект</string>
     <string name="add_object_cancel">Отменить</string>
 

@@ -24,3 +24,19 @@ data class ObjectInfo(
     val center: List<Double>,
     val coordinates: List<List<Double>>
 )
+
+data class SendObjectInfo(
+    val type: String,
+    val name: String,
+    val color: String,
+    val updateUserId: String,
+    val updateDatetime: String,
+    val center: List<Double>,
+    val coordinates: List<List<Double>>
+)
+
+data class ObjectsChangeInfo(
+    val created: List<SendObjectInfo>,
+    val deleted: List<SendObjectInfo>,
+    val edited: List<SendObjectInfo>
+)

@@ -1,7 +1,9 @@
 package xyz.moevm.ecology.ui.routes
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.location.Location
+import android.service.autofill.UserData
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,8 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FrontHand
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.FrontHand
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -51,18 +53,28 @@ import com.google.maps.android.compose.MapEffect
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
 import xyz.moevm.ecology.R
+import xyz.moevm.ecology.api.getCenter
 import xyz.moevm.ecology.api.parseObjColor
+import xyz.moevm.ecology.api.types.ObjectInfo
+import xyz.moevm.ecology.api.types.SendObjectInfo
 import xyz.moevm.ecology.data.DataSource
 import xyz.moevm.ecology.data.viewmodels.MapDataViewModel
+import xyz.moevm.ecology.data.viewmodels.UserDataViewModel
 import xyz.moevm.ecology.ui.components.DropDownMenu
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import kotlin.math.pow
 
+@SuppressLint("SimpleDateFormat")
 @Composable
 fun AddObjectScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     mapDataVM: MapDataViewModel = viewModel(),
+    userDataVM: UserDataViewModel = viewModel()
 ) {
+    val userDataState by userDataVM.state.collectAsState()
+
     val objectTypes: List<String> = DataSource.objectTypes.map { stringResource(it) }
     val objectColorMap: Map<String, String> = DataSource.objectTypesColors.mapKeys {
         stringResource(it.key)
@@ -205,20 +217,41 @@ fun AddObjectScreen(
             }
         }
 
-        Row(
-            modifier = Modifier
-                .padding(top = 10.dp)
-                .align(Alignment.End),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Button(
-                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error),
-                onClick = { navController.navigateUp() }) {
-                Text(text = stringResource(R.string.add_object_cancel))
-            }
-            Button(
-                onClick = { navController.navigate(DataSource.TopNavItems[1].route) }) {
-                Text(text = stringResource(R.string.add_object_confirm))
+        if (userDataState == null) {
+            Text(text = stringResource(R.string.error_login), color = MaterialTheme.colorScheme.error )
+        } else {
+            Row(
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .align(Alignment.End),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error),
+                    onClick = { navController.navigateUp() }) {
+                    Text(text = stringResource(R.string.add_object_cancel))
+                }
+                Button(
+                    enabled = coordinates.size > 2 && userDataState != null,
+                    onClick = {
+                        val time = Calendar.getInstance().time
+                        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+
+                        val addedObject = SendObjectInfo(
+                            type = objectType,
+                            name = objectName,
+                            color = objectColorMap[objectType]!!,
+                            updateUserId = userDataState!!._id!!.id!!,
+                            updateDatetime = formatter.format(time),
+                            center = getCenter(coordinates),
+                            coordinates = coordinates.map { listOf(it.latitude.toDouble(), it.longitude.toDouble()) }
+
+                        )
+                        mapDataVM.updateObjects(addedObject)
+                        navController.navigate(DataSource.TopNavItems[1].route)
+                    }) {
+                    Text(text = stringResource(R.string.add_object_confirm))
+                }
             }
         }
     }
