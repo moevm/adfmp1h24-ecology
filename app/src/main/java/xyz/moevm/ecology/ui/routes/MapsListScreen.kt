@@ -1,5 +1,6 @@
 package xyz.moevm.ecology.ui.routes
 
+import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import xyz.moevm.ecology.data.viewmodels.UsersViewModel
 import xyz.moevm.ecology.ui.components.Table
 
 
+@SuppressLint("SimpleDateFormat")
 @Composable
 fun MapsListScreen(
     navController: NavHostController,
@@ -27,36 +29,31 @@ fun MapsListScreen(
     usersVM: UsersViewModel = viewModel()
 ) {
     mapsVM.fetchMaps()
-
     usersVM.fetchUsers()
+
     val users by usersVM.usersList.collectAsState()
     val maps by mapsVM.mapsList.collectAsState()
     val user by userVM.state.collectAsState()
     val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
-    val rows = maps.map { map_->
-        if (map_.updateUserId != "test_data") {
-            listOf(
-                map_.name!!,
-                formatter.format(parser.parse(map_.updateDatetime!!)),
-                users.find({ it._id!!.id == map_.updateUserId!! })!!.login!!
-            )
-        }
-        else{
-            listOf(
-                map_.name!!,
-                formatter.format(parser.parse(map_.updateDatetime!!)),
-                map_.updateUserId!!
-            )
-        }
-    }
-    var onRowClick = maps.map {{}}
 
-    if (user != null)
-    {
-        onRowClick = maps.map {
-            { navController.navigate("user/${it?.updateUserId}")}
-        }
+    val rows = maps.map { map_->
+        listOf(
+            map_.name,
+            formatter.format(parser.parse(map_.updateDatetime)),
+            if (users.isNotEmpty() && user != null && map_.updateUserId != "test_data")
+                users.find { it._id!!.id == map_.updateUserId }!!.login!!
+            else if (user != null && map_.updateUserId == "test_data")
+                map_.updateUserId
+            else if (user == null)
+                stringResource(R.string.table_not_auth)
+            else
+                stringResource(R.string.table_loading)
+        )
+    }
+
+    val onRowClick = maps.map {
+            { if (user != null) navController.navigate("user/${it.updateUserId}")}
     }
 
     Table(

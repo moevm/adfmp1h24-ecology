@@ -1,5 +1,6 @@
 package xyz.moevm.ecology.ui.routes
 
+import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import xyz.moevm.ecology.data.viewmodels.UsersViewModel
 import xyz.moevm.ecology.ui.components.Table
 
 
+@SuppressLint("SimpleDateFormat")
 @Composable
 fun ObjectsListScreen(
     navController: NavHostController,
@@ -27,40 +29,30 @@ fun ObjectsListScreen(
     usersVM: UsersViewModel = viewModel()
 ) {
     objectsVM.fetchObjects()
+    usersVM.fetchUsers()
 
     val user by userVM.state.collectAsState()
-
-    usersVM.fetchUsers()
     val users by usersVM.usersList.collectAsState()
-
-
-
     val objects by objectsVM.objectsList.collectAsState()
     val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
     val rows = objects.map { obj->
-        if (obj.updateUserId != "auto_generated") {
-            listOf(
-                obj.name!!,
-                formatter.format(parser.parse(obj.updateDatetime!!)),
-                users.find({ it._id!!.id == obj.updateUserId!! })!!.login!!
-            )
-        }
-        else{
-            listOf(
-                obj.name!!,
-                formatter.format(parser.parse(obj.updateDatetime!!)),
-                obj.updateUserId!!
-            )
-        }
+        listOf(
+            obj.name,
+            formatter.format(parser.parse(obj.updateDatetime)),
+            if (users.isNotEmpty() && user != null && obj.updateUserId != "auto_generated")
+                users.find { it._id!!.id == obj.updateUserId }!!.login!!
+            else if (user != null && obj.updateUserId == "auto_generated")
+                obj.updateUserId
+            else if (user == null)
+                stringResource(R.string.table_not_auth)
+            else
+                stringResource(R.string.table_loading)
+        )
     }
 
-    var onRowClick = objects.map {{}}
-
-    if (user != null) {
-        onRowClick = objects.map {
-            { navController.navigate("user/${it?.updateUserId}")}
-        }
+    val onRowClick = objects.map {
+        { if (user != null) navController.navigate("user/${it.updateUserId}")}
     }
 
 
