@@ -11,7 +11,6 @@
     <string name="share_object">Поделиться добавленным объектом</string>
     <string name="settings">Настройки</string>
     <string name="title">Ecology</string>
-    <string name="filter">Отфильтровать таблицу</string>
     <string name="menu_about">О приложении</string>
     <string name="menu_exit">Выйти из аккаунта</string>
 
@@ -54,6 +53,9 @@
     <string name="table_objects_col_1">Имя</string>
     <string name="table_objects_col_2">Дата загрузки</string>
     <string name="table_objects_col_3">Пользователь</string>
+
+    <string name="table_not_auth">Доступно авторизованным</string>
+    <string name="table_loading">Загружается...</string>
 
     <string name="table_users">Пользователи</string>
     <string name="table_users_col_1">Логин</string>
