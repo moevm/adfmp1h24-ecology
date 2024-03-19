@@ -1,34 +1,68 @@
 package xyz.moevm.ecology.ui.routes
 
+import android.icu.text.SimpleDateFormat
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.seanproctor.datatable.DataColumn
 import xyz.moevm.ecology.R
-import xyz.moevm.ecology.data.DataSource
+import xyz.moevm.ecology.data.viewmodels.ObjectsViewModel
+import xyz.moevm.ecology.data.viewmodels.UserDataViewModel
+import xyz.moevm.ecology.data.viewmodels.UsersViewModel
 import xyz.moevm.ecology.ui.components.Table
 
 
 @Composable
 fun ObjectsListScreen(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    objectsVM: ObjectsViewModel = viewModel(),
+    userVM: UserDataViewModel = viewModel(),
+    usersVM: UsersViewModel = viewModel()
 ) {
-    val rows = listOf(
-        listOf("Просека", "10.02.2024", "dart_veider"),
-        listOf("Вырубка", "12.11.2023", "pavel_bezpravil"),
-        listOf("Лес", "6.10.2023", "nekii_ivanov_dima_1234"),
-        listOf("Ядерный взрыв", "16.07.1945", "nekii_ivanov_dima_1234")
-    )
-    val onRowClick = listOf(
-        { navController.navigate(DataSource.UserNavItems[0].route) },
-        { navController.navigate(DataSource.UserNavItems[0].route) },
-        { navController.navigate(DataSource.UserNavItems[0].route) },
-        { navController.navigate(DataSource.UserNavItems[0].route) }
-    )
+    objectsVM.fetchObjects()
+
+    val user by userVM.state.collectAsState()
+
+    usersVM.fetchUsers()
+    val users by usersVM.usersList.collectAsState()
+
+
+
+    val objects by objectsVM.objectsList.collectAsState()
+    val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
+    val rows = objects.map { obj->
+        if (obj.updateUserId != "auto_generated") {
+            listOf(
+                obj.name!!,
+                formatter.format(parser.parse(obj.updateDatetime!!)),
+                users.find({ it._id!!.id == obj.updateUserId!! })!!.login!!
+            )
+        }
+        else{
+            listOf(
+                obj.name!!,
+                formatter.format(parser.parse(obj.updateDatetime!!)),
+                obj.updateUserId!!
+            )
+        }
+    }
+
+    var onRowClick = objects.map {{}}
+
+    if (user != null) {
+        onRowClick = objects.map {
+            { navController.navigate("user/${it?.updateUserId}")}
+        }
+    }
+
 
     Table(
         header = stringResource(R.string.table_objects),

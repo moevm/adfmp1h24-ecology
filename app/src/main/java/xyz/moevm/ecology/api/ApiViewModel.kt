@@ -8,6 +8,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import xyz.moevm.ecology.api.services.EcologyAuthApiService
 import xyz.moevm.ecology.api.services.EcologyMapApiService
+import xyz.moevm.ecology.api.services.EcologyMapsApiService
+import xyz.moevm.ecology.api.services.EcologyObjectsApiService
 import xyz.moevm.ecology.api.services.EcologyUsersApiService
 import xyz.moevm.ecology.data.stores.CookiesViewModel
 
@@ -37,5 +39,13 @@ class ApiViewModel(application: Application) : AndroidViewModel(application) {
 
     val users: EcologyUsersApiService by lazy {
         retrofit.create(EcologyUsersApiService::class.java)
+    }
+
+    val objects: EcologyObjectsApiService by lazy {
+        retrofit.create(EcologyObjectsApiService::class.java)
+    }
+
+    val maps: EcologyMapsApiService by lazy {
+        retrofit.create(EcologyMapsApiService::class.java)
     }
 }
