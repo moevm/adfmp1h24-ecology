@@ -1,5 +1,6 @@
 package xyz.moevm.ecology.ui.routes
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -90,6 +92,7 @@ fun SuccessShareScreen(
     modifier: Modifier = Modifier,
     mapDataVM: MapDataViewModel = viewModel()
 ) {
+    val context = LocalContext.current
 
     val cameraPos by mapDataVM.cameraPos.collectAsState()
     val cameraPositionState = rememberCameraPositionState {
@@ -157,7 +160,13 @@ fun SuccessShareScreen(
 
         Button(
             modifier = Modifier.align(Alignment.End).padding(top = 10.dp),
-            onClick = { /* Do something or nothing */ }
+            onClick = {
+
+                val intent = Intent(Intent.ACTION_SEND)
+                    .putExtra(Intent.EXTRA_TEXT, "I find object in $cameraPos")
+                    .setType("text/plain")
+                context.startActivity(Intent.createChooser(intent, "Share Using"))
+            }
         ) {
             Text(text = stringResource(id = R.string.share_screen_success_4))
         }

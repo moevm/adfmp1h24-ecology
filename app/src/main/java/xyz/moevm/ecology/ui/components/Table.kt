@@ -37,13 +37,6 @@ fun Table(
             modifier = Modifier.padding(8.dp).fillMaxWidth()
         ) {
             Text(text = header, fontSize = 25.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    imageVector = Icons.Filled.FilterList,
-                    contentDescription = stringResource(R.string.filter)
-                )
-            }
         }
 
         PaginatedDataTable(

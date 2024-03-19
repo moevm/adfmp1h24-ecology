@@ -59,7 +59,6 @@ import kotlinx.coroutines.delay
 import xyz.moevm.ecology.R
 import xyz.moevm.ecology.api.getCenter
 import xyz.moevm.ecology.api.parseObjColor
-import xyz.moevm.ecology.api.types.ObjectInfo
 import xyz.moevm.ecology.api.types.SendObjectInfo
 import xyz.moevm.ecology.data.DataSource
 import xyz.moevm.ecology.data.viewmodels.MapDataViewModel
