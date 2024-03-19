@@ -19,7 +19,7 @@ class ApiViewModel(application: Application) : AndroidViewModel(application) {
     private val cookiesVM = CookiesViewModel(application)
     private val cookieJar = DataStoreCookieJar(cookiesVM)
 
-    private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS)
     private val okHttp = OkHttpClient().newBuilder().cookieJar(cookieJar)
         .addInterceptor((logger)) // Логи запросов
 
