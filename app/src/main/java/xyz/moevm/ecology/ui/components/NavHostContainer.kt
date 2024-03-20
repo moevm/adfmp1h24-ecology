@@ -8,12 +8,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import kotlinx.serialization.descriptors.StructureKind
 import androidx.navigation.navArgument
 import xyz.moevm.ecology.data.DataSource
 import xyz.moevm.ecology.ui.routes.AboutScreen
 import xyz.moevm.ecology.ui.routes.AddObjectScreen
-import xyz.moevm.ecology.ui.routes.ConnectionErrorScreen
+import xyz.moevm.ecology.ui.routes.ErrorScreen
 import xyz.moevm.ecology.ui.routes.MapScreen
 import xyz.moevm.ecology.ui.routes.MapsListScreen
 import xyz.moevm.ecology.ui.routes.ObjectsListScreen
@@ -78,7 +77,10 @@ fun NavHostContainer(
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
                 ) {
-                    OtherProfileScreen(id = stack.arguments?.getString("id")!!)
+                    OtherProfileScreen(
+                        navController,
+                        id = stack.arguments?.getString("id")!!
+                    )
                 }
             }
 
@@ -124,11 +126,20 @@ fun NavHostContainer(
             }
 
             // Экран ошибки подключения.
-            composable(DataSource.connectionErrorScreenRoute) {
+            composable(
+                DataSource.errorScreenRoute,
+                arguments = listOf(
+                    navArgument("title") { type = NavType.StringType },
+                    navArgument("message") { type = NavType.StringType }
+                )
+            ) { stack ->
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides viewModelStoreOwner
                 ) {
-                    ConnectionErrorScreen()
+                    ErrorScreen(
+                        title = stack.arguments?.getString("title")!!,
+                        message = stack.arguments?.getString("message")!!
+                    )
                 }
             }
 

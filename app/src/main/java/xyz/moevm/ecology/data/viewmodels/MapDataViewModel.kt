@@ -38,6 +38,9 @@ class MapDataViewModel(application: Application) : AndroidViewModel(application)
     private val _userGeoPermissionAsked = MutableStateFlow<Boolean>(false)
     val userGeoPermissionAsked: StateFlow<Boolean> = _userGeoPermissionAsked.asStateFlow()
 
+    private val _tableModeMap = MutableStateFlow<Boolean>(true)
+    val tableModeMap: StateFlow<Boolean> = _tableModeMap.asStateFlow()
+
     private fun setObjects(objectsList: List<ObjectInfo>?) {
         _objects.update { objectsList }
     }
@@ -60,6 +63,10 @@ class MapDataViewModel(application: Application) : AndroidViewModel(application)
 
     fun setUserGeoPermissionAsked(asked: Boolean) {
         _userGeoPermissionAsked.update { asked }
+    }
+
+    fun setTableModeMap(newMode: Boolean) {
+        _tableModeMap.update { newMode }
     }
 
 

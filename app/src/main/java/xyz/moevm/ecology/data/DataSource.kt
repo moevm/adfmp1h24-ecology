@@ -6,7 +6,6 @@ import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Satellite
 import androidx.compose.material.icons.filled.Terrain
-import androidx.compose.ui.res.stringResource
 import xyz.moevm.ecology.R
 import xyz.moevm.ecology.data.types.NavItem
 import xyz.moevm.ecology.data.types.TopNavItem
@@ -81,7 +80,7 @@ object DataSource {
             route = "settings"
         )
     )
-    val connectionErrorScreenRoute = "connection_error"
+    val errorScreenRoute = "error/{title}/{message}"
 
     val objectTypes = listOf(
         R.string.object_type_1,

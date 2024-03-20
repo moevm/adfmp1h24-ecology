@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import xyz.moevm.ecology.api.types.ServerUserEditData
 import xyz.moevm.ecology.data.types.UserProfileData
 import xyz.moevm.ecology.data.viewmodels.UserDataViewModel
@@ -39,6 +41,7 @@ import xyz.moevm.ecology.ui.components.user.RoleBadge
 
 @Composable
 fun OtherProfileScreen(
+    navController: NavHostController,
     id: String,
     modifier: Modifier = Modifier,
     usersVM: UsersViewModel = viewModel(),
@@ -57,7 +60,14 @@ fun OtherProfileScreen(
         mutableStateOf(self?.role == "admin")
     }
 
-    AnimatedVisibility(visible = (currentUser !== null)) {
+    // Если пользователь вышел из аккаунта на странице оценки другого пользователя.
+    LaunchedEffect(self) {
+        if (self == null) {
+            navController.navigateUp()
+        }
+    }
+
+    AnimatedVisibility(visible = (currentUser !== null && self != null)) {
         if (currentUser === null) return@AnimatedVisibility
 
         var profileData by remember {
@@ -190,10 +200,4 @@ fun OtherProfileScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun OtherProfilePreview() {
-    OtherProfileScreen("0")
 }

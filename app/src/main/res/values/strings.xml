@@ -36,13 +36,21 @@
 
     <string name="connection_error_screen_1">Пропало соединение с сервером.</string>
     <string name="connection_error_screen_2">Проверьте интернет соединение на устройстве.</string>
-    <string name="connection_error_screen_3">Переподключиться</string>
-    <string name="connection_error_screen_4">Не удалось переподключиться.</string>
+    <string name="map_user_error_screen_1">Нельзя оценить.</string>
+    <string name="map_user_error_screen_2">Данная карта была добавлена системой автоматически.</string>
+    <string name="object_user_error_screen_1">Нельзя оценить.</string>
+    <string name="object_user_error_screen_2">Данный объект был добавлен системой автоматически.</string>
+    <string name="not_auth_user_error_screen_1">Нельзя оценить.</string>
+    <string name="not_auth_user_error_screen_2">Для оценки пользователя необходимо авторизоваться в системе.</string>
 
     <string name="object_type_1">Лес</string>
     <string name="object_type_2">Вырубка</string>
     <string name="object_type_3">Поляна</string>
     <string name="object_type_4">Дом</string>
+
+    <string name="table_mode_change">Режим нажатия на строки таблицы:</string>
+    <string name="table_mode_map">Показать на карте</string>
+    <string name="table_mode_user_rate">Оценить добавившего пользователя</string>
 
     <string name="table_maps">Загруженные карты</string>
     <string name="table_maps_col_1">Имя</string>
