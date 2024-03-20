@@ -158,6 +158,7 @@ fun MapScreen(
                             val polygonOptions = PolygonOptions()
                                 .fillColor(Color.argb(127, color.red, color.green, color.blue))
                                 .strokeColor(color)
+
                             for (i in mapObject.coordinates.indices) {
                                 polygonOptions.add(
                                     LatLng(
